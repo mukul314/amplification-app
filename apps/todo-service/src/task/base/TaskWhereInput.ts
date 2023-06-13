@@ -11,26 +11,24 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { BooleanFilter } from "../../util/BooleanFilter";
 import { Type } from "class-transformer";
-
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { TaskListRelationFilter } from "../../task/base/TaskListRelationFilter";
-
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
-class UserWhereInput {
+class TaskWhereInput {
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: BooleanFilter,
   })
-  @Type(() => StringNullableFilter)
+  @Type(() => BooleanFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => BooleanFilter, {
     nullable: true,
   })
-  firstName?: StringNullableFilter;
+  completed?: BooleanFilter;
 
   @ApiProperty({
     required: false,
@@ -45,31 +43,6 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
-  })
-  @Type(() => StringNullableFilter)
-  @IsOptional()
-  @Field(() => StringNullableFilter, {
-    nullable: true,
-  })
-  lastName?: StringNullableFilter;
-
-  @ApiProperty({
-    required: false,
-
-    type: () => TaskListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => TaskListRelationFilter)
-  @IsOptional()
-  @Field(() => TaskListRelationFilter, {
-    nullable: true,
-  })
-  tasks?: TaskListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -77,7 +50,19 @@ class UserWhereInput {
   @Field(() => StringFilter, {
     nullable: true,
   })
-  username?: StringFilter;
+  text?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  uid?: UserWhereUniqueInput;
 }
 
-export { UserWhereInput as UserWhereInput };
+export { TaskWhereInput as TaskWhereInput };

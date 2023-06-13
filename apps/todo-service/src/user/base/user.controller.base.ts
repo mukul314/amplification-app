@@ -24,6 +24,11 @@ import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
 
+import { TaskFindManyArgs } from "../../task/base/TaskFindManyArgs";
+import { Task } from "../../task/base/Task";
+import { TaskWhereUniqueInput } from "../../task/base/TaskWhereUniqueInput";
+
+
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
   @common.Post()
@@ -147,4 +152,89 @@ export class UserControllerBase {
       throw error;
     }
   }
+
+
+  @common.Get("/:id/tasks")
+  @ApiNestedQuery(TaskFindManyArgs)
+  async findManyTasks(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Task[]> {
+    const query = plainToClass(TaskFindManyArgs, request.query);
+    const results = await this.service.findTasks(params.id, {
+      ...query,
+      select: {
+        completed: true,
+        createdAt: true,
+        id: true,
+        text: true,
+
+        uid: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/tasks")
+  async connectTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/tasks")
+  async updateTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/tasks")
+  async disconnectTasks(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: TaskWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      tasks: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
 }

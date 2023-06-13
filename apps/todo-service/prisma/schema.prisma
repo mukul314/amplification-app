@@ -14,6 +14,19 @@ model User {
   lastName  String?
   password  String
   roles     Json
+
+  tasks     Task[]
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
+
+model Task {
+  completed Boolean
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  text      String
+  uid       User     @relation(fields: [uidId], references: [id])
+  uidId     String
+  updatedAt DateTime @updatedAt
+}
+
