@@ -1,5 +1,7 @@
 import * as React from "react";
 
+
+
 import {
   Edit,
   SimpleForm,
@@ -7,10 +9,12 @@ import {
   TextInput,
   PasswordInput,
   SelectArrayInput,
+
   ReferenceArrayInput,
 } from "react-admin";
 
 import { TaskTitle } from "../task/TaskTitle";
+
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
@@ -26,6 +30,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
+
         <ReferenceArrayInput
           source="tasks"
           reference="Task"
@@ -34,6 +39,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={TaskTitle} />
         </ReferenceArrayInput>
+
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Edit>

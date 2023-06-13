@@ -10,7 +10,9 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
+
 import { Prisma, User, Task } from "@prisma/client";
+
 
 export class UserServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -47,6 +49,7 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
+
   async findTasks(
     parentId: string,
     args: Prisma.TaskFindManyArgs
@@ -57,4 +60,5 @@ export class UserServiceBase {
       })
       .tasks(args);
   }
+
 }

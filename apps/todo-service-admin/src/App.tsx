@@ -9,10 +9,12 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+
 import { TaskList } from "./task/TaskList";
 import { TaskCreate } from "./task/TaskCreate";
 import { TaskEdit } from "./task/TaskEdit";
 import { TaskShow } from "./task/TaskShow";
+
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -46,6 +48,7 @@ const App = (): React.ReactElement => {
           create={UserCreate}
           show={UserShow}
         />
+
         <Resource
           name="Task"
           list={TaskList}
@@ -53,6 +56,7 @@ const App = (): React.ReactElement => {
           create={TaskCreate}
           show={TaskShow}
         />
+
       </Admin>
     </div>
   );

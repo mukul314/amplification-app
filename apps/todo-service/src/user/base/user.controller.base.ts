@@ -23,9 +23,11 @@ import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+
 import { TaskFindManyArgs } from "../../task/base/TaskFindManyArgs";
 import { Task } from "../../task/base/Task";
 import { TaskWhereUniqueInput } from "../../task/base/TaskWhereUniqueInput";
+
 
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
@@ -151,6 +153,7 @@ export class UserControllerBase {
     }
   }
 
+
   @common.Get("/:id/tasks")
   @ApiNestedQuery(TaskFindManyArgs)
   async findManyTasks(
@@ -233,4 +236,5 @@ export class UserControllerBase {
       select: { id: true },
     });
   }
+
 }

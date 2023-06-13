@@ -20,8 +20,10 @@ import { UserCountArgs } from "./UserCountArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+
 import { TaskFindManyArgs } from "../../task/base/TaskFindManyArgs";
 import { Task } from "../../task/base/Task";
+
 import { UserService } from "../user.service";
 @graphql.Resolver(() => User)
 export class UserResolverBase {
@@ -89,6 +91,7 @@ export class UserResolverBase {
     }
   }
 
+
   @graphql.ResolveField(() => [Task], { name: "tasks" })
   async resolveFieldTasks(
     @graphql.Parent() parent: User,
@@ -102,4 +105,5 @@ export class UserResolverBase {
 
     return results;
   }
+
 }
